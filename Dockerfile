@@ -15,8 +15,9 @@ COPY ./config ./config
 COPY ./data ./data
 COPY ./models ./models
 COPY ./src ./src
+COPY ./output ./output
 
 # command to run on container start
 # comment and uncomment either of the following lines based on whether to train or test the model
-CMD [ "python", "./src/test.py" ]
+# CMD [ "python", "./src/test.py" ]
 # CMD [ "python", "./src/train.py" ]

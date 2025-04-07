@@ -83,8 +83,8 @@ if __name__ == "__main__":
     try:
         for filename in img_list:
 
-            print(f"\nPreparing image and ground truth mask file {filename}...")
-            logger.info(f"Preparing image and ground truth mask file {filename}...")
+            print(f"\nPreparing image {filename}...")
+            logger.info(f"Preparing image {filename}...")
 
             # reading image
             try:
@@ -123,12 +123,12 @@ if __name__ == "__main__":
                 logger.error("Could not patchify the image!")
                 raise e
 
-            print("\nImage and ground truth mask preparation done successfully!")
-            logger.info("Image and ground truth mask preparation done successfully!")
+            print("\nImage tiled.")
+            logger.info("Image tiled.")
 
             # model prediction
-            print(f"\nPredicting image file {filename}...")
-            logger.info(f"Predicting image file {filename}...")
+            print(f"\nInferencing image file {filename}...")
+            logger.info(f"Inferencing image file {filename}...")
             try:
                 for i in tqdm(range(0, patches.shape[0])):
                     for j in range(0, patches.shape[1]):
@@ -174,19 +174,19 @@ if __name__ == "__main__":
                 pred_masks = [(pred_mask == v) for v in class_values]
                 pred_mask = np.stack(pred_masks, axis=-1).astype('float')
                 pred_mask = pred_mask.argmax(2)
-                print(f"Classes present in the predicted mask after filtering according to user input of 'test_classes': {classes}")
-                logger.info(f"Classes present in the predicted mask after filtering according to user input of 'test_classes': {classes}")
+                # print(f"Classes present in the predicted mask after filtering according to user input of 'test_classes': {classes}")
+                # logger.info(f"Classes present in the predicted mask after filtering according to user input of 'test_classes': {classes}")
             except Exception as e:
                 logger.error("Could not filter user given classes from the predicted mask!")
                 raise e
             
-            try:
-                cv2.imwrite(os.path.join(pred_mask_dir, filename), pred_mask)
-                print("Predicted mask written successfully!")
-                logger.info("Predicted mask written successfully!")
-            except Exception as e:
-                logger.error("Could not write the predicted mask!")
-                raise e
+            # try:
+            #     cv2.imwrite(os.path.join(pred_mask_dir, filename), pred_mask)
+            #     print("Predicted mask written successfully!")
+            #     logger.info("Predicted mask written successfully!")
+            # except Exception as e:
+            #     logger.error("Could not write the predicted mask!")
+            #     raise e
 
             try:
                 plot_fig = visualize(
